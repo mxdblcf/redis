@@ -95,12 +95,16 @@ static void zmalloc_default_oom(size_t size) {
 
 static void (*zmalloc_oom_handler)(size_t) = zmalloc_default_oom;
 
-void *zmalloc(size_t size) {
-    void *ptr = malloc(size+PREFIX_SIZE);
 
+
+void *zmalloc(size_t size) {
+        //分配内存
+    void *ptr = malloc(size+PREFIX_SIZE);
+        //如果分配失败，调用函数处理(其实是打印报错信息一句话)
     if (!ptr) zmalloc_oom_handler(size);
+/*#ifdef   判断某个宏是否被定义，如果是，执行下面的语句        ，通常附带结束标志  #endif  */
 #ifdef HAVE_MALLOC_SIZE
-    update_zmalloc_stat_alloc(zmalloc_size(ptr));
+    update_zmalloc_stat_alloc(zmalloc_size(ptr));   /*补齐内存*/
     return ptr;
 #else
     *((size_t*)ptr) = size;
@@ -192,7 +196,8 @@ void zfree(void *ptr) {
 
     if (ptr == NULL) return;
 #ifdef HAVE_MALLOC_SIZE
-    update_zmalloc_stat_free(zmalloc_size(ptr));
+
+    update_zmalloc_stat_free(zmalloc_size(ptr));/*对齐内存*/
     free(ptr);
 #else
     realptr = (char*)ptr-PREFIX_SIZE;

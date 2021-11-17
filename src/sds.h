@@ -215,15 +215,15 @@ static inline void sdssetalloc(sds s, size_t newlen) {
     }
 }
 
-sds sdsnewlen(const void *init, size_t initlen);
+sds sdsnewlen(const void *init, size_t initlen);  /*创建字符串*/
 sds sdsnew(const char *init);
 sds sdsempty(void);
 sds sdsdup(const sds s);
-void sdsfree(sds s);
+void sdsfree(sds s);    /*释放*/
 sds sdsgrowzero(sds s, size_t len);
 sds sdscatlen(sds s, const void *t, size_t len);
 sds sdscat(sds s, const char *t);
-sds sdscatsds(sds s, const sds t);
+sds sdscatsds(sds s, const sds t);      /*拼接字符串*/
 sds sdscpylen(sds s, const char *t, size_t len);
 sds sdscpy(sds s, const char *t);
 

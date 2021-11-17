@@ -43,7 +43,7 @@
 #include "ae.h"
 #include "zmalloc.h"
 #include "config.h"
-
+/*   ae.c是redis事件框架的具体实现*/
 /* Include the best multiplexing layer supported by this system.
  * The following should be ordered by performances, descending. */
 #ifdef HAVE_EVPORT

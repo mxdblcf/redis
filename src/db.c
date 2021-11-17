@@ -42,7 +42,8 @@ int keyIsExpired(redisDb *db, robj *key);
 
 /* Update LFU when an object is accessed.
  * Firstly, decrement the counter if the decrement time is reached.
- * Then logarithmically increment the counter, and update the access time. */
+ * Then logarithmically increment the counter, and update the access time.
+ * 访问对象时更新 LFU。首先，如果达到递减时间，则递减计数器。然后对数递增计数器，并更新访问时间。*/
 void updateLFU(robj *val) {
     unsigned long counter = LFUDecrAndReturn(val);
     counter = LFULogIncr(counter);
