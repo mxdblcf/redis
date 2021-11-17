@@ -52,7 +52,7 @@ typedef struct dictEntry {
         int64_t s64;
         double d;
     } v;
-    struct dictEntry *next;
+    struct dictEntry *next;  //指向下一个k-v对
 } dictEntry;
 
 typedef struct dictType {

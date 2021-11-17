@@ -77,19 +77,20 @@
 #define HAVE_DEFRAG
 #endif
 
-void *zmalloc(size_t size);
-void *zcalloc(size_t size);
-void *zrealloc(void *ptr, size_t size);
-void zfree(void *ptr);
-char *zstrdup(const char *s);
-size_t zmalloc_used_memory(void);
-void zmalloc_set_oom_handler(void (*oom_handler)(size_t));
-size_t zmalloc_get_rss(void);
-int zmalloc_get_allocator_info(size_t *allocated, size_t *active, size_t *resident);
-size_t zmalloc_get_private_dirty(long pid);
-size_t zmalloc_get_smap_bytes_by_field(char *field, long pid);
-size_t zmalloc_get_memory_size(void);
-void zlibc_free(void *ptr);
+void *zmalloc(size_t size);//分配内存，参数是size需要空间的大小
+/*malloc的含义是“给我一个大小为size的连续内存”，而calloc貌似是“给我n个大小为size的内存”。*/
+void *zcalloc(size_t size);  /*调用系统函数calloc申请空间*/
+void *zrealloc(void *ptr, size_t size);  // 原内存重新调整为size空间的大小
+void zfree(void *ptr);    // 调用zfree释放内存空间
+char *zstrdup(const char *s);       // 字符串复制方法
+size_t zmalloc_used_memory(void);    // 获取当前以及占用的内存空间大小
+void zmalloc_set_oom_handler(void (*oom_handler)(size_t));     // 可自定义设置内存溢出的处理方法
+size_t zmalloc_get_rss(void);     // 获取RSS信息(Resident Set Size)
+int zmalloc_get_allocator_info(size_t *allocated, size_t *active, size_t *resident);    // 获取所给内存和已使用内存的大小之比
+size_t zmalloc_get_private_dirty(long pid);     // 获得实际内存大小
+size_t zmalloc_get_smap_bytes_by_field(char *field, long pid);   // 获取/proc/self/smaps字段的字节数
+size_t zmalloc_get_memory_size(void);   // 获取物理内存大小
+void zlibc_free(void *ptr);    // 原始系统free释放方法
 
 #ifdef HAVE_DEFRAG
 void zfree_no_tcache(void *ptr);
